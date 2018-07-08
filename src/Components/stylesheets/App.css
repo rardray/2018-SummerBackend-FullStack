@@ -1,0 +1,30 @@
+
+.nav {
+  text-align: left;
+  background-color: darkslateblue;
+  padding: 0px;
+  height: 70px;
+  width: 100%;
+  color: white;
+  position: sticky;
+  top: 0;
+  display: block;
+  z-index: 1;
+  box-shadow: 15px;
+}
+
+.nav-item {
+  font-size: 16;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  text-decoration: none;
+  color: black;
+}
+
+.header {
+  margin: 16px;
+  padding: 10px;
+  display: inline-block;
+}
