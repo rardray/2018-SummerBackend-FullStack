@@ -98,7 +98,7 @@ handleUpload = (e) => {
         return (
             <div style={{display: 'block'}}>
                 <div style={{display: 'inline-block', width: '20%', verticalAlign: 'top', padding: 10, backgroundColor: 'aliceblue', height: '100%'}}>
-                <img src = {profileImage} alt = {userName} style={{margin: 10, height: 200, width: 200, borderRadius: '100%', display: 'inline-block'}} />
+                <img src = {profileImage} alt = {userName} style={{margin: 10, height: '90%', width: '90%', borderRadius: '100%', display: 'inline-block'}} />
                 {email === this.props.userInfo.email || this.props.userInfo.admin === true ? 
                 <form onSubmit={this.handleUpload.bind(this)}>
                 <input ref = {ref => {this.uploadInput = ref}} type='file' /><br/>
