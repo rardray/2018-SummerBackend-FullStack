@@ -38,7 +38,6 @@ class EditButton extends Component {
     handleEdit = (e) => {
         e.preventDefault()
         const ti = this.state.title
-        const au = this.state.author
         const te = this.state.text
         const p = this.state.posts[0]
         const obj = { ...p, title: ti, text: te}
