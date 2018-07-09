@@ -29,7 +29,6 @@ class App extends Component {
       anchorEl: null,
       userInfo: [],
       error: false,
-      loggedIn: null
     }
   }
  componentDidMount () {
@@ -70,7 +69,6 @@ class App extends Component {
   }
   setStorage = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value))
-    this.setState({loggedIn: value})
   }
   passId = (post, id) => {
     this.setState(prevState => {
