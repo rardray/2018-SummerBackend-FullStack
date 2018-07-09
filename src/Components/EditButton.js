@@ -23,11 +23,10 @@ class EditButton extends Component {
     }
     componentDidMount() {
         const id = this.props.match.params.id
-        fetch("/client/posts/list", {
+        fetch("/client/posts/edit/" + id, {
         })
         .then(res =>  res.json())
-        .then(posts => posts.filter(el => el._id === id ))
-        .then(posts => this.setState({ posts: posts, title: posts[0].title, text: posts[0].text }))
+        .then(posts => this.setState({ posts: posts, title: posts.title, text: posts.text }))
         .catch(err => err)
     }
     
@@ -35,7 +34,7 @@ class EditButton extends Component {
         e.preventDefault()
         const ti = this.state.title
         const te = this.state.text
-        const p = this.state.posts[0]
+        const p = this.state.posts
         const obj = { ...p, title: ti, text: te}
         editPost(obj._id, obj)
         this.props.history.push('/posts')
