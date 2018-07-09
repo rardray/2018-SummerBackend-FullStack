@@ -22,8 +22,7 @@ class EditButton extends Component {
         }
     }
     componentDidMount() {
-        const str = this.props.history.location.pathname
-        const id = str.replace('/edit/', '')
+        const id = this.props.match.params.id
         fetch("/client/posts/list", {
         })
         .then(res =>  res.json())
