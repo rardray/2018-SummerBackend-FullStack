@@ -27,11 +27,8 @@ class EditButton extends Component {
         })
         .then(res =>  res.json())
         .then(posts => posts.filter(el => el._id === id ))
-        .then(posts => this.setState({ posts: posts }))
-        .then(this.setState({title: this.props.posts.title}))
-        .then(this.setState({text: this.props.posts.text}))
+        .then(posts => this.setState({ posts: posts, title: posts[0].title, text: posts[0].text }))
         .catch(err => err)
-        console.log(this.state.posts)
     }
     
     handleEdit = (e) => {
