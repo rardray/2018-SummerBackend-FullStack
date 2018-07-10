@@ -85,6 +85,7 @@ class App extends Component {
     const { anchorEl } = this.state;
     const {_id} = this.state.userInfo
     const userLink = '/users/' + _id
+    const { profileImage } = this.state.userInfo
     return (
       <Router>
           <div style={{backgroundColor: 'aliceblue'}}>
@@ -113,7 +114,7 @@ class App extends Component {
               <Login error = {this.state.error} userInfo = {this.state.userInfo} handleLogin = {this.handleLogin}/> <br/>
               </div>
               
-              </LoginMenu> : <NavLink className='nav-item' exact to={userLink} uid={this.state.userInfo._id} style={{display: 'inline-block', margin: 16, padding: 10, color: 'white'}}>{this.state.userInfo.userName}</NavLink> }
+              </LoginMenu> : <div style={{display: 'inline-block', justifyContent: 'center'}}><img src={profileImage} style={{width: 35, height: 35, objectFit: 'cover', borderRadius: '100%', display: 'inline-block', marginTop: 16  }} /><NavLink className='nav-item' exact to={userLink} uid={this.state.userInfo._id} style={{display: 'inline-block', margin: 16, padding: 10, color: 'white', verticalAlign: 'top'}}>{this.state.userInfo.userName}</NavLink></div> }
               </div>
               <h2 className="header">OKC Coders Backend Blog</h2>
             </div>

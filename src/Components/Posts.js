@@ -106,13 +106,23 @@ class Posts extends Component {
                 return (
                     <Card style={{paddingLeft: 20, paddingRight: 20}}>
                       <CardContent style={{marginLeft: 60, backgroundColor: 'rgb(245, 250, 255', borderRadius: 40, margin: 10}} >
-                        <Typography paragraph variant="body2">
+                        <span style={{display: 'inline-block', 
+                            backgroundColor: 'red', 
+                            height: 25, 
+                            width: 25, 
+                            borderRadius: '100%', 
+                            fontSize: 20, color: 'white', 
+                            verticalAlign: 'center', 
+                            textAlign: 'center', 
+                            marginRight: 6, 
+                            paddingTop: 3}}>{cel.name.charAt(0)}</span>
+                        <Typography style={{display: 'inline-block'}}paragraph variant="body2">
                           {cel.name === undefined ? 'guest' : cel.name}
                         </Typography>
                      <Typography paragraph>
                         {cel.comment}
                      </Typography> 
-                     <p style={{fontSize: 10, textAlign: 'right'}}>{cel.date}</p>
+                     
             {cel.name === this.props.userInfo.userName || this.props.userInfo.admin === true ?  
                 <Button onClick={this.handleEditComment.bind(this, i, cel._id)}>Edit</Button> : '' }
             {cel.name === this.props.userInfo.userName || this.props.userInfo.admin === true ?  
@@ -120,7 +130,9 @@ class Posts extends Component {
                     Delete 
                     </Button> : '' }
                 </CardContent>
+                <p style={{fontSize: 10, textAlign: 'right'}}>{cel.date}</p>
                  </Card>
+                 
                 )
             })
             return (

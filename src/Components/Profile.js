@@ -102,7 +102,7 @@ handleUpload = (e) => {
                     backgroundColor: 'aliceblue', height: '100%'}}>
                     <div style={{height: 250, width: 250, borderRadius: '100%', overflow: 'hidden', margin: 10}}>
                 <img src = {profileImage} alt = {userName} 
-                    style={{ width: 250, height: 250, objectFit: 'cover', display: 'inline-block'}} />
+                    style={{ width: '100%', height: "100%", objectFit: 'cover', display: 'inline-block'}} />
                     </div>
                 {email === this.props.userInfo.email || this.props.userInfo.admin === true ? 
                 <form onSubmit={this.handleUpload.bind(this)}>
