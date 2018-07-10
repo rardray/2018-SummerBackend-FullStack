@@ -80,7 +80,7 @@ handleUpload = (e) => {
                 <div >
                 <CardHeader
             avatar={
-              <img src={profileImage} style={{width: 50, height: 50, borderRadius: '100%'}}/>
+              <img src={profileImage} style={{width: 50, height: 50, objectFit: 'cover', borderRadius: '100%'}}/>
             }
             title={el.title}
             subheader={el.author === undefined ? 'guest' : el.author}
@@ -102,7 +102,7 @@ handleUpload = (e) => {
                     backgroundColor: 'aliceblue', height: '100%'}}>
                     <div style={{height: 250, width: 250, borderRadius: '100%', overflow: 'hidden', margin: 10}}>
                 <img src = {profileImage} alt = {userName} 
-                    style={{height: '100%', width: '100%', display: 'inline-block'}} />
+                    style={{ width: 250, height: 250, objectFit: 'cover', display: 'inline-block'}} />
                     </div>
                 {email === this.props.userInfo.email || this.props.userInfo.admin === true ? 
                 <form onSubmit={this.handleUpload.bind(this)}>

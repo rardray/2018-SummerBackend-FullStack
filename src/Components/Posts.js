@@ -135,7 +135,7 @@ class Posts extends Component {
                     style={{backgroundColor: 'steelblue'}}
                 avatar={
                  <img src={el.author === undefined ? 'http://localhost:3001/public/defaultICO.jpg' : el.profileImage} 
-                    style= {{width: 90, height: 90, borderRadius: '100%'}} 
+                    style= {{width: 90, height: 90, borderRadius: '100%', objectFit: 'cover'}} 
                     onClick={el.uid === undefined ? '' : this.handleProfile.bind(this, i, el.uid)}/>
             }
                 title={el.title}
