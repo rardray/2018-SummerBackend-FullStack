@@ -57,8 +57,7 @@ class App extends Component {
     .then(res => res.json())
     .then(userinfo => {
       if(userinfo.email === userdata.email && userinfo.password === userdata.password) {
-        this.setState({userInfo: userinfo})
-        this.setState({error: false})
+        this.setState({userInfo: userinfo, error: false})
         this.setStorage('_loggedIn', userinfo._id)
         
       } else {
@@ -71,10 +70,7 @@ class App extends Component {
     localStorage.setItem(key, JSON.stringify(value))
   }
   passId = (post, id) => {
-    this.setState(prevState => {
-      return {posts: post}
-    })
-    this.setState({_id: id})
+    this.setState({posts: post, _id: id})
   }
   myProfile = (e) => {
     e.preventDefault()
