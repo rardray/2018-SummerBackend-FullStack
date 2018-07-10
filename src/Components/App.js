@@ -72,10 +72,7 @@ class App extends Component {
   passId = (post, id) => {
     this.setState({posts: post, _id: id})
   }
-  myProfile = (e) => {
-    e.preventDefault()
-    this.props.history.push('/users/' + this.state.userInfo._id)
-  }
+  
   render() {
     const { error } = this.state
     const { anchorEl } = this.state;
