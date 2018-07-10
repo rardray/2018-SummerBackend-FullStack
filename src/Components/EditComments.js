@@ -41,7 +41,7 @@ class EditComments extends Component {
         var cobj = obj.comments[ind]
         var newCobj = {...cobj, comment: co}
         var cArray = obj.comments
-        var fArray = Object.assign(cArray[ind], newCobj)
+        Object.assign(cArray[ind], newCobj)
         const newObj = {...obj, comments: cArray}
        editPost(newObj._id, newObj)
         this.props.history.push('/posts')

@@ -11,24 +11,6 @@
         
     }
 
-    export function addComment(id, body, callback) {
-        fetch('/client/posts/comment/' + id, {
-            method: 'PUT',
-            body: JSON.stringify(body),
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-              }
-        })
-            .then(res => {
-                return res.json()})
-            .then(res => {
-                if(res.ok){
-                    return callback
-                }
-            })
-            .catch(err => err)
-    }
-    
     export function editPost(id, body) {
         fetch('/client/posts/edit/' + id, {
             method: 'PUT',

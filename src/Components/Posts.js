@@ -57,10 +57,21 @@ class Posts extends Component {
         const newObj = { 
             ... obj, comments:[...obj.comments, {name, comment: value, date}]
         }
-        addComment(obj._id, newObj, this.getPosts())
+        fetch('/client/posts/comment/' + obj._id, {
+            method: 'PUT',
+            body: JSON.stringify(newObj),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+              }
+        })
+            .then(res => {
+                if (res.ok) {
+                    return res.json().then(this.getPosts()).then(this.input.value = '')
+                }
+            })
+            .catch(err => err)
     }   
-    handleEdit = (i, id) => {
-        this.props.passId(this.state.posts[i], id)
+    handleEdit = (id) => {
         this.props.history.push('/edit/' + id)
     }
         
@@ -120,13 +131,15 @@ class Posts extends Component {
                 classes = {{
                     title: classes.title,
                     subheader: classes.subheader
-                }}
+                     }}
                     style={{backgroundColor: 'steelblue'}}
-            avatar={
-              <img src={el.author === undefined ? 'http://localhost:3001/public/defaultICO.jpg' : el.profileImage} style= {{width: 90, height: 90, borderRadius: '100%'}}    onClick={el.uid === undefined ? '' : this.handleProfile.bind(this, i, el.uid)}/>
+                avatar={
+                 <img src={el.author === undefined ? 'http://localhost:3001/public/defaultICO.jpg' : el.profileImage} 
+                    style= {{width: 90, height: 90, borderRadius: '100%'}} 
+                    onClick={el.uid === undefined ? '' : this.handleProfile.bind(this, i, el.uid)}/>
             }
-            title={el.title}
-            subheader={el.author === undefined ? 'guest' : el.author}
+                title={el.title}
+                subheader={el.author === undefined ? 'guest' : el.author}
           />
       
           <CardContent>
@@ -137,7 +150,7 @@ class Posts extends Component {
             {el.author === this.props.userInfo.userName || this.props.userInfo.admin === true ?  
                  <Button className='buttons' onClick={this.handleDelete.bind(this, i)}>Delete</Button> : '' }
            {el.author === this.props.userInfo.userName || this.props.userInfo.admin === true ?  
-              <Button className = 'buttons' onClick={this.handleEdit.bind(this, i, el._id)}>Edit</Button> : '' }
+              <Button className = 'buttons' onClick={this.handleEdit.bind(this, el._id)}>Edit</Button> : '' }
           </CardContent>
        
                     {postComments}
