@@ -81,23 +81,37 @@ class PostForm extends Component {
     render() {
         const { classes } = this.props;
         const name = this.props.userInfo.userName
+        const { title, text } = this.state
     
         return (
             <div className={classes.container} >
                 <Paper  style={{display: 'block', justifyContent: 'center', padding: 20, margin: 0}}>
                
-                <Typography> {name === undefined ? 'guest': name} </Typography>
+                <Typography variant='headline'> {name === undefined ? 'guest': name} </Typography>
                 
                 <FormControl className={classes.formControl}>
                <InputLabel htmlFor="name-simple">Title</InputLabel>
-                    <Input fullwidth = 'true' name="title" type="text" value={this.state.title} onChange={this.handleChange.bind(this)} />
+                    <Input fullwidth = 'true' 
+                        name="title" 
+                        type="text" 
+                        value={this.state.title} 
+                        onChange={this.handleChange.bind(this)} />
                     </FormControl><br/>
                     <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="name-simple">Body</InputLabel>
-                   
-                    <Input multiline = 'true' rows = '2' fullwidth = 'true' name="text" value={this.state.text} onChange={this.handleChange.bind(this)} />
+                    <Input multiline = 'true' 
+                        rows = '2' 
+                        fullwidth = 'true'
+                         name="text" 
+                         value={this.state.text} 
+                         onChange={this.handleChange.bind(this)} />
                     </FormControl><br/>
-                    <Button name="submit" onClick={this.handleSubmit.bind(this)} >Submit Post</Button>
+                    <Button name="submit" 
+                        disabled={title === '' || text === ''} 
+                        style={title ==='' || text === '' ? {width: '100%', backgroundColor: 'lightgrey', color: 'white'} : 
+                        {width: '100%', backgroundColor: 'steelblue', color: 'white'}}
+                        onClick={this.handleSubmit.bind(this)} >Submit Post
+                    </Button>
                 </Paper>
             </div>
         )
