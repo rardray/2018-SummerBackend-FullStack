@@ -36,10 +36,7 @@ class SignUp extends Component {
             admin: false,
             date: renderDate(),
             profileImage: 'http://localhost:3001/public/defaultICO.jpg',
-            erMessage: false,
-            touched: {
-                userName: false
-            }
+            erMessage: false
         }
     }
     handleChange = (e) => {
@@ -87,11 +84,6 @@ class SignUp extends Component {
         .catch(err => err)
          }
     
-     handleBlur = (field) => (evt) => {
-        this.setState({
-          touched: { ...this.state.touched, [field]: true },
-        });
-    }
      canSubmit() {
         const error = validate(this.state)
         const isDisabled = Object.keys(error).some(x => error[x])
@@ -102,7 +94,8 @@ class SignUp extends Component {
         const { classes } = this.props;
         const error = validate(this.state)
         const isDisabled = Object.keys(error).some(x => error[x]) 
-            || this.state.userName === '' || this.state.password === '' 
+            || this.state.userName === '' 
+            || this.state.password === '' 
             || this.state.confirmPassword === '' 
             || this.state.firstName === '' 
             || this.state.lastName === '' 
@@ -114,7 +107,7 @@ class SignUp extends Component {
             return hasError
           };
         const { erMessage } = this.state
-        const { userName } = this.state.touched
+    
         return(
                <div style={{backgroundColor: 'lightgrey', padding: 20}} >
                 <div className={classes.container} style={{backgroundColor: 'lightgrey', margin: 0}}>

@@ -57,6 +57,9 @@ class Posts extends Component {
         const newObj = { 
             ... obj, comments:[...obj.comments, {name, comment: value, date}]
         }
+        if(value === '') {
+            return
+        }
         fetch('/client/posts/comment/' + obj._id, {
             method: 'PUT',
             body: JSON.stringify(newObj),
