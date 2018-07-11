@@ -1,5 +1,18 @@
 
+export function validate(values) {
+    const numberCheck = /[0-9]/gi
+    const oneUpperCase = /[A-Z]/g
+    const emailCheck = '.com' || '.org' || '.gov' || '.net' || '.biz'
 
+    return {
+        userName: values.userName === '' ? '' : values.userName.length <= 2, 
+        password: values.password === '' ? '' : values.password.length <= 7 || !values.password.match(numberCheck) || !values.password.match(oneUpperCase),
+        confirmPassword: values.confirmPassword === '' ? '' :values.confirmPassword !== values.password,
+        firstName: values.firstName === '' ? '' : values.firstName.length <= 3 || !values.firstName.match(oneUpperCase), 
+        lastName: values.lastName === '' ? '' : values.lastName.length <= 3 || !values.lastName.match(oneUpperCase), 
+        email: values.email=== '' ? '' : values.email.length === 0 || !values.email.includes('@') || !values.email.match(emailCheck),
+    }
+}
  export function onDelete(id) {
         console.log(id)
         fetch('/client/posts/delete/' + id, {
