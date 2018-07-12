@@ -6,11 +6,11 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import MainPostStyle from './MainPostStyle';
-import Drawer from './Drawer';
+import MainPostStyle from './StyleComponents/MainPostStyle';
+import Drawer from './StyleComponents/Drawer';
 import './stylesheets/posts.css';
 import TextField from '@material-ui/core/TextField';
-
+import ConfirmDelDialog from './StyleComponents/ConfirmDelDialog'
 
 const styles = theme => ({
   title: {
@@ -150,14 +150,15 @@ class Posts extends Component {
                         color: 'lightblue'}}
                     onClick={this.handleEditComment.bind(this, i, cel._id)}>Edit</Button> : '' }
             {cel.name === this.props.userInfo.userName || this.props.userInfo.admin === true ?  
+                 <ConfirmDelDialog>
                  <Button 
                     style={{
                         padding: 0, 
-                        fontSize: 10, 
-                        color: 'lightblue'}}
+                        fontSize: 14, 
+                        color: 'red'}}
                         onClick={this.handleDeleteComment.bind(this, i, cel._id)}>
                     Delete 
-                    </Button> : '' }
+                    </Button></ConfirmDelDialog> : '' }
                     </div>
                 </CardContent>
                 <p style={{
@@ -211,15 +212,18 @@ class Posts extends Component {
                     Edit
                 </Button> : '' }
             {el.author === this.props.userInfo.userName || this.props.userInfo.admin === true ?  
+                 <ConfirmDelDialog >
                  <Button 
                     className='buttons' 
                     style = {{
                         padding: 0, 
-                        fontSize: 10, 
-                        color: 'lightblue'}} 
+                        fontSize: 14, 
+                        color: 'red'}} 
                     onClick={this.handleDelete.bind(this, i)}>
                     Delete
-                </Button> : '' }
+                </Button>
+                </ConfirmDelDialog> : '' }
+                
             </CardContent>
                 {postComments}
         </MainPostStyle>

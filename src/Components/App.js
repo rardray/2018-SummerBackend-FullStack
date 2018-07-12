@@ -4,7 +4,7 @@ import PostForm from './PostForm';
 import Posts from './Posts';
 import Home from './home';
 import EditButton from './EditButton';
-import SimpleMenu from './SimpleMenu'
+import SimpleMenu from './StyleComponents/SimpleMenu'
 import {
   BrowserRouter as Router,
   Route,
@@ -15,7 +15,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import EditComments from './EditComments';
 import Login from './Login'
-import LoginMenu from './LoginMenu';
+import LoginMenu from './StyleComponents/LoginMenu';
 import SignUp from './SignUp'
 import Profile from './Profile'
 import AdminUtils from './AdminUtils'
