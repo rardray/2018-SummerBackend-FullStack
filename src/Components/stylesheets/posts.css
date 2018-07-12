@@ -1,6 +1,7 @@
 .drop-down {
     background-color: lightskyblue;
 }
-.buttons {
-    color: lightslategray;
+.buttons  {
+    font-size: 10;
+    color: lightblue;
 }

@@ -23,7 +23,8 @@ const styles = theme => ({
     maxWidth: '60%',
     color: 'lightslategrey',
     display: 'block',
-    margin: 'auto'
+    margin: 'auto',
+    paddingTop: 0
   },
   media: {
     height: 0,
@@ -59,7 +60,7 @@ class Drawer extends React.Component {
 
     return (
       <div className={classes.card}>
-        <Card  style={{backgroundColor: 'rgb(240, 245, 250'}} >
+        <Card  style={{backgroundColor: 'rgb(240, 245, 250)', paddingTop: 0}} >
           <CardActions className={classes.actions} disableActionSpacing>
             <IconButton
               onClick={this.handleExpandClick}

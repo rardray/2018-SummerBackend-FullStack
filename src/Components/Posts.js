@@ -10,13 +10,17 @@ import MainPostStyle from './MainPostStyle';
 import Drawer from './Drawer';
 import './stylesheets/posts.css';
 import TextField from '@material-ui/core/TextField';
+
 const styles = theme => ({
   title: {
    color: 'white',
-   fontSize: 20
+   fontSize: 16,
+   margin: 0,
+   padding: 0
     },
     subheader: {
       color: 'ivory',
+      padding: 0,
     },
   });
   
@@ -107,8 +111,8 @@ class Posts extends Component {
         const postHtml = this.state.posts.map((el, i) => {
             const postComments = el.comments.map(cel => {
                 return (
-                    <Card style={{paddingLeft: 20, paddingRight: 20}}>
-                      <CardContent style={{marginLeft: 60, backgroundColor: 'rgb(245, 250, 255', borderRadius: 40, margin: 10}} >
+                    <Card style={{paddingLeft: 20, paddingRight: 20, paddingBottom: 0, paddingTop: 0}}>
+                      <CardContent style={{marginLeft: 60, backgroundColor: 'rgb(245, 250, 255', borderRadius: 40, margin: 4, padding: 3}} >
                         <span style={{display: 'inline-block', 
                             backgroundColor: 'red', 
                             height: 25, 
@@ -118,73 +122,127 @@ class Posts extends Component {
                             verticalAlign: 'center', 
                             textAlign: 'center', 
                             marginRight: 6, 
-                            paddingTop: 3}}>{cel.name.charAt(0)}</span>
-                        <Typography style={{display: 'inline-block'}}paragraph variant="body2">
+                            paddingTop: 3,}}>
+                            {cel.name.charAt(0)}</span>
+                        <Typography 
+                            style={{
+                                display: 'inline-block', 
+                                color: 'darkslateblue'}}
+                            paragraph variant="body2">
                           {cel.name === undefined ? 'guest' : cel.name}
                         </Typography>
-                     <Typography paragraph>
+                     <span 
+                        style = {{
+                            fontSize: 12, 
+                            marginLeft: 20, 
+                            display: 'inline-block'}}>
                         {cel.comment}
-                     </Typography> 
-                     
+                     </span> 
+                     <div style={{float: 'right' }}>
             {cel.name === this.props.userInfo.userName || this.props.userInfo.admin === true ?  
-                <Button onClick={this.handleEditComment.bind(this, i, cel._id)}>Edit</Button> : '' }
+                <Button 
+                    style = {{
+                        padding: 0, 
+                        fontSize: 10, 
+                        color: 'lightblue'}}
+                    onClick={this.handleEditComment.bind(this, i, cel._id)}>Edit</Button> : '' }
             {cel.name === this.props.userInfo.userName || this.props.userInfo.admin === true ?  
-                 <Button onClick={this.handleDeleteComment.bind(this, i, cel._id)}>
+                 <Button 
+                    style={{
+                        padding: 0, 
+                        fontSize: 10, 
+                        color: 'lightblue'}}
+                        onClick={this.handleDeleteComment.bind(this, i, cel._id)}>
                     Delete 
                     </Button> : '' }
+                    </div>
                 </CardContent>
-                <p style={{fontSize: 10, textAlign: 'right'}}>{cel.date}</p>
+                <p style={{
+                    fontSize: 8, 
+                    textAlign: 'right', 
+                    margin: 4}}>
+                {cel.date}
+                </p>
                  </Card>
                  
                 )
             })
             return (
                 
-                <div id={el._id} key={i}>
+                <div id={el._id} key={el._id}>
                <MainPostStyle>
                 <CardHeader 
                 classes = {{
                     title: classes.title,
                     subheader: classes.subheader
                      }}
-                    style={{backgroundColor: 'steelblue'}}
+                    style={{backgroundColor: 'steelblue', padding: 4}}
                 avatar={
                  <img src={el.author === undefined ? 'http://localhost:3001/public/defaultICO.jpg' : el.profileImage} 
-                    style= {{width: 90, height: 90, borderRadius: '100%', objectFit: 'cover'}} 
+                    style= {{
+                        width: 50, 
+                        height: 50, 
+                        borderRadius: '100%', 
+                        objectFit: 'cover'}} 
                     onClick={el.uid === undefined ? '' : this.handleProfile.bind(this, i, el.uid)}/>
             }
                 title={el.title}
                 subheader={el.author === undefined ? 'guest' : el.author}
           />
-      
-          <CardContent>
+            <CardContent style={{paddingTop: 8, paddingBottom: 4}}>
             <Typography component="p">
             {el.text}
             </Typography>
-            <p style={{fontSize: 10, textAlign: 'right'}}>{el.date}</p>
+            <p style={{
+                fontSize: 10, 
+                textAlign: 'right', 
+                marginBottom: 0}}>
+            {el.date}
+            </p>
             {el.author === this.props.userInfo.userName || this.props.userInfo.admin === true ?  
-                 <Button className='buttons' onClick={this.handleDelete.bind(this, i)}>Delete</Button> : '' }
-           {el.author === this.props.userInfo.userName || this.props.userInfo.admin === true ?  
-              <Button className = 'buttons' onClick={this.handleEdit.bind(this, el._id)}>Edit</Button> : '' }
-          </CardContent>
-       
-                    {postComments}
-                    </MainPostStyle>
-                    <Drawer>
-                <form onSubmit={this.submitComment.bind(this, i)}>
-        
-        <input name="comment" ref={node => this.input = node} placeholder="Comment..." style = {{ width: '100%', borderRadius: 8, borderWidth: 0, padding: 6, backgroundColor: 'rgb(250,250,255)'}}
-                label = "Comment" margin= "normal" />
-                    </form>
+              <Button style = {{
+                  padding: 0, 
+                  fontSize: 10, 
+                  color: 'lightblue'}} 
+                onClick={this.handleEdit.bind(this, el._id)}>
+                    Edit
+                </Button> : '' }
+            {el.author === this.props.userInfo.userName || this.props.userInfo.admin === true ?  
+                 <Button 
+                    className='buttons' 
+                    style = {{
+                        padding: 0, 
+                        fontSize: 10, 
+                        color: 'lightblue'}} 
+                    onClick={this.handleDelete.bind(this, i)}>
+                    Delete
+                </Button> : '' }
+            </CardContent>
+                {postComments}
+        </MainPostStyle>
+        <Drawer>
+            <form onSubmit={this.submitComment.bind(this, i)}>
+                <input 
+                    name="comment" 
+                    ref={node => this.input = node} 
+                    placeholder="Comment..." 
+                    style = {{ 
+                        width: '100%', 
+                        borderRadius: 8, 
+                        borderWidth: 0, 
+                        padding: 6, 
+                        backgroundColor: 'rgb(250,250,255)'}}
+                    label = "Comment" 
+                    margin= "normal" />
+            </form>
                 </Drawer >
                 </div>
             )
         })
         return (
             <div>
-            
                 {postHtml}
-                </div>
+            </div>
         )
     }
 }

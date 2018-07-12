@@ -22,7 +22,8 @@ const styles = theme => ({
     maxWidth: '60%',
     flexWrap: 'wrap',
     display: 'block',
-    margin: 'auto'
+    margin: 'auto',
+    padding: 0
   
    
   },
