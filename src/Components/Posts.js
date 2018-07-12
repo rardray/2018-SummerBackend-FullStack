@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { onDelete, addComment, editPost, renderDate } from "./BlogActions";
+import { onDelete, addComment, editPost, renderDate, colorPicker } from "./BlogActions";
 import Button from '@material-ui/core/Button';
 import { withStyles, createStyleSheet } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -10,6 +10,7 @@ import MainPostStyle from './MainPostStyle';
 import Drawer from './Drawer';
 import './stylesheets/posts.css';
 import TextField from '@material-ui/core/TextField';
+
 
 const styles = theme => ({
   title: {
@@ -107,14 +108,16 @@ class Posts extends Component {
     }
     
     render() {
+        
         const classes = this.props.classes
         const postHtml = this.state.posts.map((el, i) => {
             const postComments = el.comments.map(cel => {
+                const colors = colorPicker(cel.name.charAt(0))
                 return (
                     <Card style={{paddingLeft: 20, paddingRight: 20, paddingBottom: 0, paddingTop: 0}}>
                       <CardContent style={{marginLeft: 60, backgroundColor: 'rgb(245, 250, 255', borderRadius: 40, margin: 4, padding: 3}} >
                         <span style={{display: 'inline-block', 
-                            backgroundColor: 'red', 
+                            backgroundColor: colors, 
                             height: 25, 
                             width: 25, 
                             borderRadius: '100%', 

@@ -18,6 +18,7 @@ import Login from './Login'
 import LoginMenu from './LoginMenu';
 import SignUp from './SignUp'
 import Profile from './Profile'
+import AdminUtils from './AdminUtils'
 
 class App extends Component {
   constructor(props) {
@@ -119,6 +120,7 @@ class App extends Component {
             <Route exact path="/login" render = {(props) => <Login  {...props} error = {this.state.error} userInfo = {this.state.userInfo} handleLogin = {this.handleLogin}/>} />
             <Route path="/signup" component={SignUp} />
             <Route exact path='/users/:uid' render= {(props) => <Profile {...this.props} {...props} userInfo = {this.state.userInfo} _id={this.state._id}/>} />
+            <Route exact path='/admin' render = {(props) => <AdminUtils {...props} userInfo = {this.state.userInfo}/>}/>
           </div>
       </Router>
     )

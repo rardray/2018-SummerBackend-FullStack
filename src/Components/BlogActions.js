@@ -75,3 +75,18 @@ export function validate(values) {
         }
         return `${d.getFullYear()}${addDigit(d.getMonth())}${addDigit(d.getDate())}${addDigit(d.getHours())}${addDigit(d.getMinutes())}${addDigit(d.getSeconds())}`
     }
+    export function colorPicker(val) {
+        if (val === /[A-D]/gi) {
+            return 'red'
+        } else if (val.match(/[E-H]/gi)) {
+            return 'darkblue'
+        } else if (val.match(/[I-M]/gi)) {
+            return 'black'
+        } else if (val.match(/[N-Q]/)) {
+            return 'green'
+        } else if (val.match(/[R-U]/gi)) {
+            return 'purple'
+        } else {
+            return 'orange'
+        }
+    }
