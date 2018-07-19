@@ -19,7 +19,8 @@ import LoginMenu from './StyleComponents/LoginMenu';
 import SignUp from './SignUp'
 import Profile from './Profile'
 import AdminUtils from './AdminUtils'
-
+import Dms from './Dms'
+import Messages from './Messages'
 class App extends Component {
   constructor(props) {
     super(props)
@@ -79,14 +80,16 @@ class App extends Component {
     const { anchorEl } = this.state;
     const {_id} = this.state.userInfo
     const userLink = '/users/' + _id
-    const { profileImage } = this.state.userInfo
+    const { profileImage, admin } = this.state.userInfo
     return (
       <Router>
           <div style={{backgroundColor: 'aliceblue'}}>
             <div className="nav" >
+           
       
             <div style={{float: 'right', margin: 0, display: 'inline'}}>
-           
+          {admin ? <NavLink style={{verticalAlign: 'top'}} className = 'nav-item' exact to = '/admin'>
+          <img src='http://localhost:3001/public/key-xxl.png' style={{width: 20, height: 'auto'}} /></NavLink> : '' }
             <SimpleMenu handleClose = {this.handleClose}>
             <MenuItem onClick={this.handleClose}>
               <NavLink className="nav-item" exact to="/">Home</NavLink>
@@ -121,6 +124,7 @@ class App extends Component {
             <Route path="/signup" component={SignUp} />
             <Route exact path='/users/:uid' render= {(props) => <Profile {...this.props} {...props} userInfo = {this.state.userInfo} _id={this.state._id}/>} />
             <Route exact path='/admin' render = {(props) => <AdminUtils {...props} userInfo = {this.state.userInfo}/>}/>
+            <Route exact path='/dms/:email/:email2' render = {(props) => <Dms {...props} userInfo = {this.state.userInfo} />} />
           </div>
       </Router>
     )

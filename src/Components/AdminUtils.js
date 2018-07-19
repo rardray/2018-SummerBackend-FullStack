@@ -8,32 +8,30 @@ class AdminUtils extends Component {
             adminStatus: null
         }
     }
-    static getDerivedStateFromProps(props, state) {
-        if(state.adminStatus !== props.userInfo) {
-            return {
-                adminStatus: props.userInfo
-            }
-        }
-        return null
-    }
-    componentDidMount() {
+
+    componentDidMount(){
         const { admin } = this.props.userInfo
         console.log(this.state.adminStatus)
+        if(admin) {
             fetch('/users/userinfo/get/list')
             .then(res => res.json())
             .then(userinfo => this.setState({users: userinfo}))
             .catch(err => err)
-    }
+    } }
     handleDeleteUser = (id, e) => {
         e.preventDefault()
         fetch('/users/userinfo/delete/' + id, {
             method: 'DELETE',
         })
-        .then(res => res.json().then(fetch('/users/userinfo/get/list').then(res => res.json()).then(userinfo => this.setState({users: userinfo}))))
+        .then(res => res.json()
+        .then(fetch('/users/userinfo/get/list')
+        .then(res => res.json()
+        .then(userinfo => this.setState({users: userinfo})
+    ))))
         .catch(err => err)
     }
     render() {
-        const {userName, admin } = this.state.adminStatus
+        const {userName, admin } = this.props.userInfo
         const postUsers = this.state.users.map(el => {
             return (
                 <div>

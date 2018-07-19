@@ -39,7 +39,7 @@ class ConfirmDelDialog extends React.Component {
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-          {this.props.children}
+          <span onClick = {this.handleClose} >{this.props.children}</span>
           </DialogActions>
         </Dialog>
       </div>

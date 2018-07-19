@@ -36,6 +36,7 @@ class SignUp extends Component {
             admin: false,
             date: renderDate(),
             profileImage: 'http://localhost:3001/public/defaultICO.jpg',
+            dms: [],
             erMessage: false
         }
     }
@@ -68,14 +69,23 @@ class SignUp extends Component {
                     "Content-type": "application/json; charset=UTF-8"
                   }
             })
-            .then(()=> this.setState({userName: '', password: '', 
+            .then(fetch("/dms/signup", {
+                method: 'POST',
+                body: JSON.stringify(signup),
+                headers: {
+                    "Content-type" : "application/json; charset=UTF-8"
+                }
+            }).then(()=> this.setState({
+                userName: '', 
+                password: '', 
                 confirmPassword: '', 
                 firstName: '', 
                 lastName: '', 
                 email: '', 
                 admin: false, 
                 erMessage: false}))
-            .then(() => this.props.history.push('/login'))
+                .then(() => this.props.history.push('/login')))
+            
           } else {
             console.log('email already in use')
             this.setState({erMessage: true})

@@ -48,7 +48,12 @@ saveImage  = () => {
             "Content-type": "application/json; charset=UTF-8"
           }
     })
+    .then(res => res.json())
 
+}
+handleDm = (email, e) => {
+    e.preventDefault()
+    this.props.history.push('/dms/' + email + '/' + this.props.userInfo.email)
 }
 handleUpload = (e) => {
     if (this.uploadInput.files[0] === undefined) {
@@ -80,7 +85,7 @@ handleUpload = (e) => {
                 <div >
                 <CardHeader
             avatar={
-              <img src={profileImage} style={{width: 50, height: 50, objectFit: 'cover', borderRadius: '100%'}}/>
+              <img src={profileImage} alt={userName} style={{width: 50, height: 50, objectFit: 'cover', borderRadius: '100%'}}/>
             }
             title={el.title}
             subheader={el.author === undefined ? 'guest' : el.author}
@@ -110,6 +115,7 @@ handleUpload = (e) => {
                 <input ref = {ref => {this.uploadInput = ref}} type='file' accept="image/png, image/jpg"/><br/>
                 <button style={{color: 'white', backgroundColor: 'steelblue', padding: 10, width: '90%', fontSize: 16}}>upload</button>
                 </form> : '' }
+                <button onClick={this.handleDm.bind(this, email)}>Message</button>
                 <p>User Name: {userName}</p>
                 <p>Name: {firstName} {lastName}</p>
                 <p>Email: {email} </p>
