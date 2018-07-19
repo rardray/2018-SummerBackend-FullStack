@@ -19,22 +19,27 @@ class Dms extends Component {
             name: null,
             message: '',
             profileImage: '',
+            blurred: false
 
         }
     }
 
     componentDidMount() {
+    //recipient
         const email = this.props.match.params.email
+    //sender
         const email2 = this.props.match.params.email2
+    //get recipient info
         fetch('/dms/find/' + email )
         .then(res => res.json())
         .then(dms => this.setState({recieverI: dms, toFrom: dms.userName}))
+    //fetch user info
         .then(fetch('/dms/find/' + email2)
         .then(res => res.json()).then(dms => this.setState({userI: dms, dms: dms.dms, name: dms.userName, email: email})))
+     //fetch reciever profile image
         .then(fetch('/users/userinfo/auth/' + email)
         .then(res => res.json())
         .then(userinfo => this.setState({profileImage: userinfo.profileImage})))
-        console.log(this.state.dms)
     }
        
 
@@ -91,17 +96,20 @@ class Dms extends Component {
         .then(dms => this.setState({userI: dms, dms: dms.dms, message: '',})
         )
         ))
-        .then(fetch('/dms/find/' + this.props.match.params.email)
+        .then(fetch('/dms/find/' + this.props.match.params.email) // <== fetch reciever updated info w ID's
         .then(res => res.json())
         .then(dms => this.setState({recieverI: dms}))) )
     .catch(err => err)
     }
+    //move to home if logged in info does not match email2 params
     redirect = () => {
         this.props.history.push('/')
     }
+
     handleBlur = (e) => {
         e.preventDefault()
-        return this.setState({blurred: true})
+        this.setState({blurred: true})
+        this.markAsRead()
     }    
 
     markAsRead = () => {
@@ -110,43 +118,37 @@ class Dms extends Component {
             if (Dms[i].email === this.props.match.params.email && Dms[i].read === false) {
          Dms[i].read = true
         }
-        this.setState(prevState => {
-            prevState.dms.read = Dms.read
-        })}
-        console.log(Dms)
-        console.log(this.state.dms)
+        this.setState({dms: Dms})
+        }
     }
   
-
     render() {
-    const postDms = this.state.dms.filter(el => {
-        return el.email === this.props.match.params.email
-    })
-    const {userName, email } = this.state.recieverI
-    const { profileImage,} = this.state
-    const postDm = postDms.map(el => {
-        return (
+        const postDms = this.state.dms.filter(el => {
+            return el.email === this.props.match.params.email
+        })
+        const {userName, email } = this.state.recieverI
+        const { profileImage, } = this.state
+        const postDm = postDms.map(el => {
+            return (
             <div style = {{paddingLeft: 10, paddingRight: 10, display: 'block', marginTop: 0, marginBottom: 0}}>
-            <CardContent style = {{borderRadius: 20, padding: 6, backgroundColor: 'rgb(250,250,250)', margin: 6}}>
-            <h5 style={{margin: 0, display: 'inline-block', width: 80}}>{el.name}:</h5>
-            <p style = {el.read ? {fontSize: 12, display: 'inline-block', } : {fontSize: 12, display: 'inline-block', fontWeight: 'bold'}} >{el.message}</p>
-            <p style = {el.read ? { fontSize: 8, display: 'inline-block', float: 'right', color: 'grey'} :{ fontSize: 8, display: 'inline-block', float: 'right', color: 'grey', fontWeight: 'bold'} }>{el.date}</p>
-            </CardContent>
+                <CardContent style = {{borderRadius: 20, padding: 6, backgroundColor: 'rgb(250,250,250)', margin: 6}}>
+                    <h5 style={{margin: 0, display: 'inline-block', width: 80}}>{el.name}:</h5>
+                      <p style = {el.read ? {fontSize: 13, display: 'inline-block', } : {fontSize: 12, display: 'inline-block', fontWeight: 'bold'}} >{el.message}</p>
+                      <p style = {el.read  ? { fontSize: 8, display: 'inline-block', float: 'right', color: 'grey'} :{ fontSize: 8, display: 'inline-block', float: 'right', color: 'grey', fontWeight: 'bold'} }>{el.date}</p>
+                </CardContent>
             </div>
         )
     })
         return (
-            <div style = {{display: 'block', justifyContent: 'center', margin: 'auto'}}>
-          {this.props.userInfo.email === this.props.match.params.email2 ?   
+             <div style = {{display: 'block', justifyContent: 'center', margin: 'auto'}}>
+        {this.props.userInfo.email === this.props.match.params.email2 ?   
           <div style={{
               display: 'block',
               justifyContent: 'center',
           }}> 
               <Card 
-        
-              style={{justifyContent: 'center', maxWidth: '40%', margin: 'auto' }}>
+                style={{justifyContent: 'center', maxWidth: '40%', margin: 'auto' }}>
                   <CardHeader style = {{backgroundColor: 'rgb(245,245,250)'}}
-                 
                     title = {userName}
                     subheader = {email}
                     avatar = {<img src = {profileImage}   
@@ -158,10 +160,7 @@ class Dms extends Component {
                         display: 'inline-block' ,
                         borderRadius: '100%'
                     }}/>}/>
-
-                    
-                    
-                  <p>{postDm}</p>
+                        {postDm}
                   <div style = {{
                       display: 'block',
                       justifyContent: 'center',
@@ -182,12 +181,11 @@ class Dms extends Component {
                         type='text' 
                         value={this.state.message} 
                         onChange={this.handleChange.bind(this)}
-                        focusIn = {this.markAsRead.bind(this)}/>
+                        onFocus = {this.handleBlur.bind(this)}/>
                     </form>
                     </div>
                     </Card>
                     </div> : this.redirect() }
-                    
             </div>
         )
     }
