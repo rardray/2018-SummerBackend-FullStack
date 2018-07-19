@@ -19,7 +19,7 @@ class Dms extends Component {
             name: null,
             message: '',
             profileImage: '',
-            blurred: false
+
         }
     }
 
@@ -53,7 +53,8 @@ class Dms extends Component {
                 email: email, 
                 message: message, 
                 date: renderDate(),
-                read: true}]
+                read: true
+            }]
         const fromMapped = {...fromObj, dms: newDms}
         // Recipient user data
         const toObj = this.state.recieverI
@@ -65,7 +66,8 @@ class Dms extends Component {
                 email: this.props.match.params.email2, 
                 message: message, 
                 date: renderDate(),
-                read: false}]
+                read: false
+            }]
         const toMapped = {...toObj, dms: newSendDms}
         //save message to logged in user dms
         fetch('/dms/put/' + this.state.userI._id, {
@@ -86,20 +88,20 @@ class Dms extends Component {
         })
         .then(res => res.json().then(fetch('/dms/find/' + this.props.match.params.email2)// < ==get updated data and set state
         .then(res => res.json())
-        .then(dms => this.setState({userI: dms, dms: dms.dms, message: ''}))))
-        
-        
-    )
+        .then(dms => this.setState({userI: dms, dms: dms.dms, message: '',})
+        )
+        ))
+        .then(fetch('/dms/find/' + this.props.match.params.email)
+        .then(res => res.json())
+        .then(dms => this.setState({recieverI: dms}))) )
     .catch(err => err)
     }
     redirect = () => {
         this.props.history.push('/')
     }
-
     handleBlur = (e) => {
         e.preventDefault()
-        this.setState({blurred: true})
-        console.log(this.state.blurred)
+        return this.setState({blurred: true})
     }    
 
     markAsRead = () => {
@@ -114,13 +116,14 @@ class Dms extends Component {
         console.log(Dms)
         console.log(this.state.dms)
     }
+  
 
     render() {
     const postDms = this.state.dms.filter(el => {
         return el.email === this.props.match.params.email
     })
     const {userName, email } = this.state.recieverI
-    const { profileImage, blurred } = this.state
+    const { profileImage,} = this.state
     const postDm = postDms.map(el => {
         return (
             <div style = {{paddingLeft: 10, paddingRight: 10, display: 'block', marginTop: 0, marginBottom: 0}}>
@@ -134,7 +137,6 @@ class Dms extends Component {
     })
         return (
             <div style = {{display: 'block', justifyContent: 'center', margin: 'auto'}}>
-             {blurred ? this.markAsRead() : ''}   
           {this.props.userInfo.email === this.props.match.params.email2 ?   
           <div style={{
               display: 'block',
@@ -180,7 +182,7 @@ class Dms extends Component {
                         type='text' 
                         value={this.state.message} 
                         onChange={this.handleChange.bind(this)}
-                        onFocus={this.handleBlur.bind(this)}/>
+                        focusIn = {this.markAsRead.bind(this)}/>
                     </form>
                     </div>
                     </Card>
