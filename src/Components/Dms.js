@@ -25,6 +25,7 @@ class Dms extends Component {
     }
 
     componentDidMount() {
+        this.timerID = setInterval(()=> this.checkUpdates(), 10000)
     //recipient
         const email = this.props.match.params.email
     //sender
@@ -41,8 +42,19 @@ class Dms extends Component {
         .then(res => res.json())
         .then(userinfo => this.setState({profileImage: userinfo.profileImage})))
     }
-       
-
+    componentWillUnmount() {
+        clearInterval(this.timerID)
+    }
+    checkUpdates = () => {
+        const email2 = this.props.match.params.email2
+        fetch('/dms/find/' + email2)
+        .then(res => res.json().then(res => {
+            if (res.ok) {
+                dms => this.setState({userI: dms, dms: dms.dms})
+            }
+        }))
+        console.log(this.state.userI)
+    }
     handleChange = (e) => {
         this.setState({message: e.target.value}) 
     }

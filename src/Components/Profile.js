@@ -111,11 +111,11 @@ handleUpload = (e) => {
                     </div>
                 {email === this.props.userInfo.email || this.props.userInfo.admin === true ? 
                 <form onSubmit={this.handleUpload.bind(this)}>
-                <label>Update Profile Picture </label>
-                <input ref = {ref => {this.uploadInput = ref}} type='file' accept="image/png, image/jpg"/><br/>
-                <button style={{color: 'white', backgroundColor: 'steelblue', padding: 10, width: '90%', fontSize: 16}}>upload</button>
+                <input style = {{width: 0.1, height: 0.1, position: 'absolute', zIndex: -1, overflow: 'hidden',}}ref = {ref => {this.uploadInput = ref}} name='file' id = 'file' type='file' accept="image/png, image/jpg"/><br/>
+                <label style = {{cursor: 'pointer'}}for='file'>Update Profile Picture </label>
+                <button style={{color: 'white', backgroundColor: 'steelblue', padding: 10, width: '90%', fontSize: 16, cursor: 'pointer'}}>upload</button>
                 </form> : '' }
-                <button onClick={this.handleDm.bind(this, email)}>Message</button>
+                {email !== this.props.userInfo.email ? <button onClick={this.handleDm.bind(this, email)}>Message</button> : ''}
                 <p>User Name: {userName}</p>
                 <p>Name: {firstName} {lastName}</p>
                 <p>Email: {email} </p>

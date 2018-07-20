@@ -187,7 +187,8 @@ class Posts extends Component {
                         width: 50, 
                         height: 50, 
                         borderRadius: '100%', 
-                        objectFit: 'cover'}} 
+                        objectFit: 'cover',
+                        cursor: 'pointer'}} 
                     onClick={el.uid === undefined ? '' : this.handleProfile.bind(this, i, el.uid)}/>
             }
                 title={el.title}
