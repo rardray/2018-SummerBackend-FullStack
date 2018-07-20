@@ -46,6 +46,7 @@ class Dms extends Component {
         clearInterval(this.timerID)
     }
     checkUpdates = () => {
+        const email = this.props.match.params.email
         const email2 = this.props.match.params.email2
         fetch('/dms/find/' + email2)
         .then(res => res.json())
@@ -56,7 +57,9 @@ class Dms extends Component {
                 console.log(dms.dms.length)
             }
         )
-                console.log(this.state.dms.length)
+        .then(fetch('/dms/find/' + email)
+        .then(res => res.json())
+        .then(dms => this.setState({recieverI: dms})))
     }
     handleChange = (e) => {
         this.setState({message: e.target.value}) 
