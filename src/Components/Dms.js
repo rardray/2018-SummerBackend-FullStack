@@ -48,18 +48,22 @@ class Dms extends Component {
     checkUpdates = () => {
         const email2 = this.props.match.params.email2
         fetch('/dms/find/' + email2)
-        .then(res => res.json().then(res => {
-            if (res.ok) {
-                dms => this.setState({userI: dms, dms: dms.dms})
+        .then(res => res.json())
+        .then(dms => {
+            if (dms.dms.length !== this.state.dms.length) {
+                this.setState({userI: dms, dms: dms.dms})}
+                this.markAsRead()
+                console.log(dms.dms.length)
             }
-        }))
-        console.log(this.state.userI)
+        )
+                console.log(this.state.dms.length)
     }
     handleChange = (e) => {
         this.setState({message: e.target.value}) 
     }
     handleSubmit = (e) => {
         e.preventDefault()
+        clearInterval(this.timerID)
         const {email, name, message } = this.state
         //Logged in user data
         const fromObj = this.state.userI
@@ -111,6 +115,7 @@ class Dms extends Component {
         .then(fetch('/dms/find/' + this.props.match.params.email) // <== fetch reciever updated info w ID's
         .then(res => res.json())
         .then(dms => this.setState({recieverI: dms}))) )
+        .then(this.timerID = setInterval(()=> this.checkUpdates(), 10000))
     .catch(err => err)
     }
     //move to home if logged in info does not match email2 params
