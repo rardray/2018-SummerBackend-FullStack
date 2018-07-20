@@ -59,7 +59,8 @@ class Dms extends Component {
         )
         .then(fetch('/dms/find/' + email)
         .then(res => res.json())
-        .then(dms => this.setState({recieverI: dms})))
+        .then(dms => {
+            if (dms.dms.length === recieverI.dms.length) {this.setState({recieverI: dms})}}))
     }
     handleChange = (e) => {
         this.setState({message: e.target.value}) 
