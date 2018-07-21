@@ -25,7 +25,6 @@ class Dms extends Component {
     }
 
     componentDidMount() {
-        this.timerID = setInterval(()=> this.checkUpdates(), 10000)
     //recipient
         const email = this.props.match.params.email
     //sender
@@ -42,32 +41,13 @@ class Dms extends Component {
         .then(res => res.json())
         .then(userinfo => this.setState({profileImage: userinfo.profileImage})))
     }
-    componentWillUnmount() {
-        clearInterval(this.timerID)
-    }
-    checkUpdates = () => {
-        const email = this.props.match.params.email
-        const email2 = this.props.match.params.email2
-        fetch('/dms/find/' + email2)
-        .then(res => res.json())
-        .then(dms => {
-            if (dms.dms.length !== this.state.dms.length) {
-                this.setState({userI: dms, dms: dms.dms})}
-                this.markAsRead()
-                console.log(dms.dms.length)
-            }
-        )
-        .then(fetch('/dms/find/' + email)
-        .then(res => res.json())
-        .then(dms => {
-            if (dms.dms.length !== this.state.recieverI.dms.length) {this.setState({recieverI: dms.dms})}}))
+    fetchDms = () => {
+     
     }
     handleChange = (e) => {
         this.setState({message: e.target.value}) 
     }
-    handleSubmit = (e) => {
-        e.preventDefault()
-        clearInterval(this.timerID)
+    submitComment = () =>{        
         const {email, name, message } = this.state
         //Logged in user data
         const fromObj = this.state.userI
@@ -94,6 +74,7 @@ class Dms extends Component {
                 read: false
             }]
         const toMapped = {...toObj, dms: newSendDms}
+        
         //save message to logged in user dms
         fetch('/dms/put/' + this.state.userI._id, {
             method: 'PUT',
@@ -119,8 +100,23 @@ class Dms extends Component {
         .then(fetch('/dms/find/' + this.props.match.params.email) // <== fetch reciever updated info w ID's
         .then(res => res.json())
         .then(dms => this.setState({recieverI: dms}))) )
-        .then(this.timerID = setInterval(()=> this.checkUpdates(), 10000))
-    .catch(err => err)
+    .catch(err => err)}
+    handleSubmit = (e) => {
+        e.preventDefault()
+        //recipient
+     const email = this.props.match.params.email
+     //sender
+         const email2 = this.props.match.params.email2
+     //get recipient info
+         fetch('/dms/find/' + email )
+         .then(res => res.json())
+         .then(dms => this.setState({recieverI: dms, toFrom: dms.userName}))
+     //fetch user info
+         .then(fetch('/dms/find/' + email2)
+         .then(res => res.json())
+         .then(dms => this.setState({userI: dms, dms: dms.dms, name: dms.userName, email: email}))
+        .then(() => this.submitComment()))
+
     }
     //move to home if logged in info does not match email2 params
     redirect = () => {

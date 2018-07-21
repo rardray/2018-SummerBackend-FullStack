@@ -101,6 +101,9 @@ class App extends Component {
                 <NavLink className="nav-item" exact to="/add">Add New Post</NavLink>
               </MenuItem>
               <MenuItem>
+              <NavLink className="nav-item" exact to= "/dmwindow">Messages</NavLink>
+              </MenuItem>
+              <MenuItem>
               <h4 onClick={this.handleSignOut}>Sign Out</h4>
               </MenuItem>
               </SimpleMenu>
@@ -112,7 +115,10 @@ class App extends Component {
               </div>
               
               </LoginMenu> : <div style={{display: 'inline-block', justifyContent: 'center'}}><img src={profileImage} style={{width: 35, height: 35, objectFit: 'cover', borderRadius: '100%', display: 'inline-block', marginTop: 16  }} /><NavLink className='nav-item' exact to={userLink} uid={this.state.userInfo._id} style={{display: 'inline-block', margin: 16, padding: 10, color: 'white', verticalAlign: 'top'}}>{this.state.userInfo.userName}</NavLink></div> }
+
               </div>
+              <div style = {{display: 'inline', float: 'right', padding: 10 }}>
+              {this.state.userInfo.length === 0 ? '' : <Messages style = {{display: 'inline', float: 'right' }}userInfo = {this.state.userInfo} /> }</div>
               <h2 className="header">OKC Coders Backend Blog</h2>
             </div>
           <Route exact path="/" component={Home} /> 
@@ -125,6 +131,7 @@ class App extends Component {
             <Route exact path='/users/:uid' render= {(props) => <Profile {...this.props} {...props} userInfo = {this.state.userInfo} _id={this.state._id}/>} />
             <Route exact path='/admin' render = {(props) => <AdminUtils {...props} userInfo = {this.state.userInfo}/>}/>
             <Route exact path='/dms/:email/:email2' render = {(props) => <Dms {...props} userInfo = {this.state.userInfo} />} />
+            <Route exact path='/dmwindow' render = {(props) => <Messages {...props} userInfo = {this.state.userInfo}/>}/>
           </div>
       </Router>
     )
